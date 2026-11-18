@@ -73,5 +73,5 @@ function cleanItem(x){const fields=['title','station','quantity','priority','amo
 app.use((err,req,res,next)=>{console.error('API failure',err.message);res.status(500).json({error:'Server error, please try again'})});
 await client.connect();
 store=client.db('kitchen_manager').collection('state');
-await store.updateOne({_id:'team'},{$setOnInsert:initial()},{upsert:true});
+await store.updateOne({_id:'team'},{$setOnInsert:{revision:0,date:new Date().toISOString().slice(0,10),prep:[],opening:[],closing:[],shopping:[]}},{upsert:true});
 app.listen(PORT,'0.0.0.0',()=>console.log('Kitchen Manager API listening on '+PORT));
